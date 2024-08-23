@@ -1,0 +1,56 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .card {
+    padding: 2em;
+  }
+  
+  .read-the-docs {
+    color: #888;
+  }
+  
+.board {
+    background-color: gray;
+    width: 560px;
+    height: 560px;
+    display: grid;
+    grid-template-columns: repeat(8, 70px);
+    grid-template-rows: repeat(8, 70px);
+    
+}
+
+.tile {
+    width:70px;
+    height: 70px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.tile-white {
+    background-color : #769656;
+}
+
+.tile-black {
+    background-color : #e7e7cb;
+}
+
+.hint {
+  background-color: rgba(100, 100, 159, 9);
+}
+
+.danger {
+  background-color: rgba(170, 40, 40, 9);
+  
+}
+
+.piece {
+    width: 40px;
+    height: 40px;
+    place-content: center;
+    color:black;
+}
