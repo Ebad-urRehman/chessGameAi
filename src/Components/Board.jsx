@@ -16,6 +16,8 @@ export default function Board() {
         '6 1': {'url': './images/pawn_w.png', 'name': 'pawn_w', 'i': 6, 'j': 1},
         '7 1': {'url': './images/pawn_w.png', 'name': 'pawn_w', 'i': 7, 'j': 1},
         
+        '4 4': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 4, 'j': 4},
+
         '0 0': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 0, 'j': 0},
         '1 0': {'url': './images/knight_w.png', 'name': 'knight_w', 'i': 1, 'j': 0},
         '2 0': {'url': './images/bishop_w.png', 'name': 'bishop_w', 'i': 2, 'j': 0},
@@ -57,9 +59,6 @@ export default function Board() {
                 updateHighlightHints={updateHighlightHints}
                 updateboardState={updateboardState}
                 />)
-            // initialBoardState[`${i} ${j}`] = `${i} ${j}`
-            
-            // console.log(initialBoardState)
         }
 
     }
