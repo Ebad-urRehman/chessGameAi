@@ -29,6 +29,7 @@
     align-items: center;
     display: flex;
     justify-content: center;
+    border: 0.1px solid #769656;
 }
 
 .tile-white {
@@ -40,16 +41,20 @@
 }
 
 .hint {
-  background-color: rgba(100, 100, 159, 9);
+  /* background-color: rgba(100, 100, 159, 0.9); */
+  background-image: url('./images/circle_blue.png'); /* Add your image */
+  background-position: center; /* Center the image in the square */
+  background-repeat: no-repeat;
+  background-size: 25%;
 }
 
 .danger {
-  background-color: rgba(170, 40, 40, 9);
+  background-color: rgba(202, 76, 76, 0.5);
   
 }
 
 .advantage {
-  background-color: rgba(18, 227, 11, 9);
+  background-color: rgba(18, 227, 11, 0.5);
 }
 
 .piece {
