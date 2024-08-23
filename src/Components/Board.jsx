@@ -16,11 +16,14 @@ export default function Board() {
         '6 1': {'url': './images/pawn_w.png', 'name': 'pawn_w', 'i': 6, 'j': 1},
         '7 1': {'url': './images/pawn_w.png', 'name': 'pawn_w', 'i': 7, 'j': 1},
         
-        '1 2': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 1, 'j': 2},
-        '3 2': {'url': './images/rook_b.png', 'name': 'rook_b', 'i': 3, 'j': 2},
-        '5 3': {'url': './images/rook_b.png', 'name': 'rook_b', 'i': 5, 'j': 3},
-        '7 3': {'url': './images/rook_b.png', 'name': 'rook_b', 'i': 7, 'j': 3},
-        '3 3': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 3, 'j': 3},
+        // tests
+        // '1 2': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 1, 'j': 2},
+        // '3 2': {'url': './images/rook_b.png', 'name': 'rook_b', 'i': 3, 'j': 2},
+        // '5 3': {'url': './images/rook_b.png', 'name': 'rook_b', 'i': 5, 'j': 3},
+        // '7 3': {'url': './images/rook_b.png', 'name': 'rook_b', 'i': 7, 'j': 3},
+        // '3 3': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 3, 'j': 3},
+        // '4 5': {'url': './images/knight_w.png', 'name': 'knight_w', 'i': 4, 'j': 5},
+        // '5 5': {'url': './images/king_w.png', 'name': 'king_w', 'i': 5, 'j': 5},
 
 
         '0 0': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 0, 'j': 0},
@@ -51,7 +54,7 @@ export default function Board() {
         '7 7': {'url': './images/rook_b.png', 'name': 'rook_b', 'i': 7, 'j': 7},
     }
     
-    const initialHighlightHints = {'0 0': 'danger'}
+    const initialHighlightHints = {}
 
     const [boardState, updateboardState] = React.useState(initialBoardState)
     const [highlightHints, updateHighlightHints] = React.useState(initialHighlightHints)

@@ -37,47 +37,81 @@ export function highlightHint(i, j, isPieceExists, updateHighlightHints, boardSt
             let hints = {}
             // upper ones
             for(let u=j+1; u<=7; u++) {
-            if(boardState[`${i} ${u}`]) {
-                    boardState[`${i} ${u}`].name.endsWith('_w')?null:hints[`${i} ${u}`] = 'danger'
-                    break
-            }
-            else {
-                hints[`${i} ${u}`] = 'hint'
+            hints[`${i} ${u}`] = chooseHint(boardState[`${i} ${u}`])
+            if(hints[`${i} ${u}`] != 'hint') {
+                break
             }
         }
 
         for(let l=j-1; l>=0; l--) {
-            if(boardState[`${i} ${l}`]) {
-                    boardState[`${i} ${l}`].name.endsWith('_w')?null:hints[`${i} ${l}`] = 'danger'
-                    break
-            }
-            else {
-                hints[`${i} ${l}`] = 'hint'
+            hints[`${i} ${l}`] = chooseHint(boardState[`${i} ${l}`])
+            if(hints[`${i} ${l}`] != 'hint') {
+                break
             }
         }
 
         for(let lf=i-1; lf>=0; lf--) {
-            if(boardState[`${lf} ${j}`]) {
-                    boardState[`${lf} ${j}`].name.endsWith('_w')?null:hints[`${lf} ${j}`] = 'danger'
-                    break
-            }
-            else {
-                hints[`${lf} ${j}`] = 'hint'
+            hints[`${lf} ${j}`] = chooseHint(boardState[`${lf} ${j}`])
+            if(hints[`${lf} ${j}`] != 'hint') {
+                break
             }
         }
 
         for(let r=i+1; r<=7; r++) {
-            if(boardState[`${r} ${j}`]) {
-                boardState[`${r} ${j}`].name.endsWith('_w')?null:hints[`${r} ${j}`] = 'danger'
+            hints[`${r} ${j}`] = chooseHint(boardState[`${r} ${j}`])
+            if(hints[`${r} ${j}`] != 'hint') {
                 break
-            }
-            else {
-                hints[`${r} ${j}`] = 'hint'
             }
         }
 
         
             return hints
         })            
+    }
+
+    else if(isPieceExists['name'] == "knight_w") {
+        updateHighlightHints((prevHighlightHints) => {
+            let hints = {}
+            hints[`${i+1} ${j+2}`] = chooseHint(boardState[`${i+1} ${j+2}`])
+            hints[`${i-1} ${j+2}`] = chooseHint(boardState[`${i+1} ${j+2}`])
+
+            hints[`${i+1} ${j-2}`] = chooseHint(boardState[`${i+1} ${j-2}`])
+            hints[`${i-1} ${j-2}`] = chooseHint(boardState[`${i-1} ${j-2}`])
+
+            hints[`${i+2} ${j+1}`] = chooseHint(boardState[`${i+2} ${j+1}`])
+            hints[`${i+2} ${j-1}`] = chooseHint(boardState[`${i+2} ${j-1}`])
+
+            hints[`${i-2} ${j+1}`] = chooseHint(boardState[`${i-2} ${j+1}`])
+            hints[`${i-2} ${j-1}`] = chooseHint(boardState[`${i-2} ${j-1}`])
+            return hints
+        })
+    }
+    else if(isPieceExists['name'] == "king_w") {
+        updateHighlightHints((prevHighlightHints) => {
+            let hints = {}
+            hints[`${i+1} ${j+1}`] = chooseHint(boardState[`${i+1} ${j+1}`])
+            hints[`${i} ${j+1}`] = chooseHint(boardState[`${i} ${j+1}`])
+            hints[`${i-1} ${j+1}`] = chooseHint(boardState[`${i-1} ${j+1}`])
+
+            hints[`${i+1} ${j}`] = chooseHint(boardState[`${i+1} ${j}`])
+            hints[`${i-1} ${j}`] = chooseHint(boardState[`${i-1} ${j}`])
+
+            hints[`${i+1} ${j-1}`] = chooseHint(boardState[`${i+1} ${j-1}`])
+            hints[`${i} ${j-1}`] = chooseHint(boardState[`${i} ${j-1}`])
+            hints[`${i-1} ${j-1}`] = chooseHint(boardState[`${i-1} ${j-1}`])
+            return hints
+        })
+    }
+}
+
+function chooseHint(targetTile) {
+    if(targetTile && targetTile.name.endsWith('_b')) {
+        return 'danger'
+    }
+    else if(!targetTile){
+        return 'hint'
+    }
+    else if(targetTile.name.endsWith('_w')) {
+        return ''
     }
 }
