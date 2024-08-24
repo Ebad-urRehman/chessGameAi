@@ -1,20 +1,18 @@
 import React from "react"
 import {highlightHint} from './HighlightHintsData'
+import {makeMove} from './HighlightHintsData'
+
+var selectedElement;
 
 export default function Tile({i, j, highlightHints, boardState, updateHighlightHints, updateboardState}) {
 
     function handleClick() {
-        isPieceExists?highlightHint(i,j, isPieceExists, updateHighlightHints, boardState):console.log('button without piece click')
-        
-        // updateboardState((prevBoardState) => ({
-        //     ...prevBoardState,
-        //     [`${i} ${j}`]: {
-        //         ...prevBoardState[`${i} ${j}`],
-        //         'url': './images/rook_b.png',
-        //         'name': 'rook_b'
-        //     }
-        // }))
+        isPieceExists && isPieceExists.name.endsWith('_w')?selectedElement = highlightHint(i,j, updateHighlightHints, boardState):console.log('button without piece click')
+        console.log(isPieceExists)
+        console.log(selectedElement)
+        ishighlightEffect == 'hint' || ishighlightEffect == 'danger'?makeMove(i, j, updateboardState, selectedElement, updateHighlightHints):console.log('')
     }
+    
 
 
     let colorClass = ((i + j) % 2) ? 'tile tile-white':'tile tile-black'    
