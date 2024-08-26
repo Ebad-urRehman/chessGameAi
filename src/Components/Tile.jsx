@@ -1,6 +1,7 @@
 import React from "react"
 import {highlightHintWhite, highlightHintBlack} from './HighlightHintsData'
 import {makeMove} from './HighlightHintsData'
+import {checkCheckWhite} from './HighlightHintsData'
 
 var selectedElement;
 var turn = "_w"
@@ -9,7 +10,10 @@ export default function Tile({i, j, highlightHints, boardState, updateHighlightH
 
     function handleClick() {
         if(turn=="_w") {
-        isPieceExists && isPieceExists.name.endsWith('_w')?selectedElement = highlightHintWhite(i,j, updateHighlightHints, boardState):console.log('button without piece click')
+            let isCheck = checkCheckWhite(boardState)
+            if(!isCheck) {
+                isPieceExists && isPieceExists.name.endsWith('_w')?selectedElement = highlightHintWhite(i,j, updateHighlightHints, boardState):console.log('button without piece click')
+            }
         }
         else if(turn=="_b") {
             isPieceExists && isPieceExists.name.endsWith('_b')?selectedElement = highlightHintBlack(i,j, updateHighlightHints, boardState):console.log('button without piece click')    
