@@ -68,6 +68,11 @@ export function checkPawnBlackHints(i, j, updateHighlightHints, boardState) {
 
 export function rooksHints(i, j, updateHighlightHints, boardState, turn) {
     updateHighlightHints(prevHighlightHints => {
+        // case when castiling
+        if(prevHighlightHints[`${i} ${j}`] == 'advantage') {
+            return {}
+        }
+        
         let hints = {}
         // upper ones
         for(let u=j+1; u<=7; u++) {
@@ -134,6 +139,8 @@ export function kingsHints(i, j, updateHighlightHints, boardState, turn) {
         hints[`${i+1} ${j-1}`] = chooseHint(boardState[`${i+1} ${j-1}`], turn)
         hints[`${i} ${j-1}`] = chooseHint(boardState[`${i} ${j-1}`], turn)
         hints[`${i-1} ${j-1}`] = chooseHint(boardState[`${i-1} ${j-1}`], turn)
+
+
         return hints
     })
 }
@@ -282,3 +289,37 @@ export function chooseHint(targetTile, turn) {
         }
     }
 }
+
+
+
+
+// Castle moves
+export function castleCheck(i, j, updateHighlightHints, boardState, turn) {
+    updateHighlightHints((prevHighlightHints) => {
+        let hints = {}
+        hints[`${i+1} ${j+1}`] = chooseHint(boardState[`${i+1} ${j+1}`], turn)
+        hints[`${i} ${j+1}`] = chooseHint(boardState[`${i} ${j+1}`], turn)
+        hints[`${i-1} ${j+1}`] = chooseHint(boardState[`${i-1} ${j+1}`], turn)
+
+        hints[`${i+1} ${j}`] = chooseHint(boardState[`${i+1} ${j}`], turn)
+        hints[`${i-1} ${j}`] = chooseHint(boardState[`${i-1} ${j}`], turn)
+
+        hints[`${i+1} ${j-1}`] = chooseHint(boardState[`${i+1} ${j-1}`], turn)
+        hints[`${i} ${j-1}`] = chooseHint(boardState[`${i} ${j-1}`], turn)
+        hints[`${i-1} ${j-1}`] = chooseHint(boardState[`${i-1} ${j-1}`], turn)
+
+        // short castling
+        if(!boardState[`${i+1} ${j}`] && !boardState[`${i+2} ${j}`]) {
+            hints[`${i+3} ${j}`] = 'advantage'
+        }
+
+        // long castling
+        if(!boardState[`${i-1} ${j}`] && !boardState[`${i-2} ${j}`] && !boardState[`${i-3} ${j}`]) {
+            hints[`${i-4} ${j}`] = 'advantage'
+        }
+        return hints
+    })
+}
+
+
+
