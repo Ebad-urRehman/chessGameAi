@@ -3,6 +3,8 @@
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
+    display: flex;
+    flex-direction: row;
   }
   
   .card {
@@ -63,3 +65,45 @@
     place-content: center;
     color:black;
 }
+
+
+.pawn-upgrade-black {
+  width:70px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: #e7e7cb;
+}
+
+.pawn-upgrade-hidden {
+  visibility: hidden;
+}
+
+.pawn-upgrade-white {
+  width:70px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: #769656;
+}
+
+
+
+.pawn-upgrade-tile {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid black;
+}
+
+.pawn-upgrade-piece {
+    width: 40px;
+    height: 40px;
+    place-content: center;
+    color:black;
+}
+

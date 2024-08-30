@@ -2,11 +2,12 @@ import React from "react"
 import {highlightHintWhite, highlightHintBlack} from './HighlightHintsData'
 import {makeMove, makeMoveCastle} from './HighlightHintsData'
 import {checkCheckWhite} from './HighlightHintsData'
+import { promotePawnWhite, promotePawnBlack} from "./SeperatePiecesHighlights";
 
 var selectedElement;
 var turn = "_w"
 
-export default function Tile({i, j, highlightHints, boardState, updateHighlightHints, updateboardState, setIsKingRookMovedWhite, setIsKingRookMovedBlack, isKingRookMovedWhite, isKingRookMovedBlack}) {
+export default function Tile({i, j, highlightHints, boardState, updateHighlightHints, updateboardState, setIsKingRookMovedWhite, setIsKingRookMovedBlack, isKingRookMovedWhite, isKingRookMovedBlack, setPawnPromotionWhite, setPawnPromotionBlack, pawnPromotionWhite, pawnPromotionBlack}) {
 
     function handleClick() {
         if(turn=="_w") {
@@ -20,7 +21,7 @@ export default function Tile({i, j, highlightHints, boardState, updateHighlightH
         }        
         console.log(isPieceExists)
         console.log(selectedElement)
-        ishighlightEffect == 'hint' || ishighlightEffect == 'danger'?turn=makeMove(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack):console.log('')
+        ishighlightEffect == 'hint' || ishighlightEffect == 'danger'?turn=makeMove(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack, setPawnPromotionWhite, setPawnPromotionBlack):console.log('')
         ishighlightEffect == 'advantage' ? turn=makeMoveCastle(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack): console.log('not castled')
     }
     
@@ -33,7 +34,7 @@ export default function Tile({i, j, highlightHints, boardState, updateHighlightH
     return (
     <div className={`${colorClass} ${ishighlightEffect}`}
         id={`${i} ${j}`}
-        onClick={handleClick}>
+        onClick={!(pawnPromotionWhite[0] || pawnPromotionBlack[0])? handleClick:()=>(console.log('click disabled'))}>
         <Piece i={i} j={j} isPieceExists={isPieceExists}/>
     </div>
 )
@@ -50,4 +51,42 @@ function Piece(props) {
 
 }
 
+
+export function TilePawnSelection({setPawnPromotionWhite, setPawnPromotionBlack, pawnPromotionWhite, pawnPromotionBlack, updateboardState}) {
+    let hiddenWhite = pawnPromotionWhite[0]==true?'':'pawn-upgrade-hidden'
+    let hiddenBlack = pawnPromotionBlack[0]==true?'':'pawn-upgrade-hidden'
+
+    return(
+    <div>
+        <div className={`pawn-upgrade-white ${hiddenWhite}`}>
+        <div className="pawn-upgrade-tile" onClick={()=>promotePawnWhite(setPawnPromotionWhite, pawnPromotionWhite, selectedElement, "queen_w", updateboardState)}>
+                <img className="pawn-upgrade-piece" src="./images/queen_w.png"></img>
+            </div>
+            <div className="pawn-upgrade-tile" onClick={()=>promotePawnWhite(setPawnPromotionWhite, pawnPromotionWhite, selectedElement, "knight_w", updateboardState)}>
+                <img className="pawn-upgrade-piece" src="./images/knight_w.png"></img>
+            </div>
+            <div className="pawn-upgrade-tile" onClick={()=>promotePawnWhite(setPawnPromotionWhite, pawnPromotionWhite, selectedElement, "bishop_w", updateboardState)}>
+                <img className="pawn-upgrade-piece" src="./images/bishop_w.png"></img>
+            </div>
+            <div className="pawn-upgrade-tile" onClick={()=>promotePawnWhite(setPawnPromotionWhite, pawnPromotionWhite, selectedElement, "rook_w", updateboardState)}>
+                <img className="pawn-upgrade-piece" src="./images/rook_w.png"></img>
+            </div>
+        </div>
+        <div className={`pawn-upgrade-black ${hiddenBlack}`}>
+            <div className="pawn-upgrade-tile">
+                <img className="pawn-upgrade-piece" src="./images/queen_b.png"  onClick={()=>promotePawnBlack(setPawnPromotionBlack, pawnPromotionBlack, selectedElement, "queen_b", updateboardState)}></img>
+            </div>
+            <div className="pawn-upgrade-tile">
+                <img className="pawn-upgrade-piece" src="./images/knight_b.png"  onClick={()=>promotePawnBlack(setPawnPromotionBlack, pawnPromotionBlack, selectedElement, "knight_b", updateboardState)}></img>
+            </div>
+            <div className="pawn-upgrade-tile">
+                <img className="pawn-upgrade-piece" src="./images/bishop_b.png"  onClick={()=>promotePawnBlack(setPawnPromotionBlack, pawnPromotionBlack, selectedElement, "bishop_b", updateboardState)}></img>
+            </div>
+            <div className="pawn-upgrade-tile">
+                <img className="pawn-upgrade-piece" src="./images/rook_b.png"  onClick={()=>promotePawnBlack(setPawnPromotionBlack, pawnPromotionBlack, selectedElement, "rook_b", updateboardState)}></img>
+            </div>
+        </div>
+    </div>
+    )
+}
 

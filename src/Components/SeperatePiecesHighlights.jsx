@@ -112,7 +112,7 @@ export function knightsHints(i, j, updateHighlightHints, boardState, turn) {
     updateHighlightHints((prevHighlightHints) => {
         let hints = {}
         hints[`${i+1} ${j+2}`] = chooseHint(boardState[`${i+1} ${j+2}`], turn)
-        hints[`${i-1} ${j+2}`] = chooseHint(boardState[`${i+1} ${j+2}`], turn)
+        hints[`${i-1} ${j+2}`] = chooseHint(boardState[`${i-1} ${j+2}`], turn)
 
         hints[`${i+1} ${j-2}`] = chooseHint(boardState[`${i+1} ${j-2}`], turn)
         hints[`${i-1} ${j-2}`] = chooseHint(boardState[`${i-1} ${j-2}`], turn)
@@ -321,5 +321,35 @@ export function castleCheck(i, j, updateHighlightHints, boardState, turn) {
     })
 }
 
+export function promotePawnWhite(setPawnPromotionWhite, movedPawn, selectedPawn, name, updateboardState) {
+    
+    // changing that image of pawn to promoted one
+    updateboardState((prevBoardState) => ({
+        ...prevBoardState,
+        [`${movedPawn[1]} ${movedPawn[2]}`]: {
+            ...prevBoardState[`${selectedPawn.i} ${selectedPawn.j}`],
+            'url': `./images/${name}.png`,
+            'name': name
+        }
+    }))
 
+    setPawnPromotionWhite([false, null])
+
+}
+
+export function promotePawnBlack(setPawnPromotionBlack, movedPawn, selectedPawn, name, updateboardState) {
+    
+    // changing that image of pawn to promoted one
+    updateboardState((prevBoardState) => ({
+        ...prevBoardState,
+        [`${movedPawn[1]} ${movedPawn[2]}`]: {
+            ...prevBoardState[`${selectedPawn.i} ${selectedPawn.j}`],
+            'url': `./images/${name}.png`,
+            'name': name
+        }
+    }))
+
+    setPawnPromotionBlack([false, null])
+
+}
 

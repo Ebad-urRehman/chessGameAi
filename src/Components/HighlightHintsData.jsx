@@ -72,7 +72,7 @@ export function highlightHintBlack(i, j, updateHighlightHints, boardState, isKin
 
 
 
-export function makeMove(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack) {
+export function makeMove(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack, setPawnPromotionWhite, setPawnPromotionBlack) {
     updateHighlightHints({})
     console.log('selected element' ,selectedElement)
     // delete previous element
@@ -88,9 +88,25 @@ export function makeMove(i, j, updateboardState, selectedElement, updateHighligh
                 if(selectedElement.name == 'rook_w' || selectedElement.name == 'king_w') {
                     setIsKingRookMovedWhite(true)
                 }
-                else if(selectedElement.name == 'rook_w' || selectedElement.name == 'king_w') {
+                else if(selectedElement.name == 'rook_b' || selectedElement.name == 'king_b') {
                     setIsKingRookMovedBlack(true)
                 }
+
+                // upgrading pawn 
+                if(selectedElement.name == 'pawn_w' && j==7) {
+                    setPawnPromotionWhite((isPromotion) => {
+                        console.log('ispromotion', isPromotion)
+                        return [true, i, j]
+                    })
+                }
+                
+
+                if(selectedElement.name == 'pawn_b' && j==0) {
+                    setPawnPromotionBlack((isPromotion) => {
+                        return [true, i, j]
+                    })
+                }
+                
             }
         }
 
