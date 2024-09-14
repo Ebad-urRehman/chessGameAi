@@ -1,7 +1,7 @@
 import { checkPawnWhiteHints, rooksHints, knightsHints, kingsHints, bishopsHints, queensHints, checkPawnBlackHints } from "./SeperatePiecesHighlights"
 import { castleCheck } from "./SeperatePiecesHighlights"
 
-export function highlightHintWhite(i, j, updateHighlightHints, boardState, isKingRookMovedWhite) {
+export function highlightHintWhite(i, j, updateHighlightHints, boardState, isKingRookMovedWhite, updateCheckState) {
     let isPieceExists = boardState[`${i} ${j}`]
     let selectedElement = isPieceExists
     if(isPieceExists['name'] == 'pawn_w'){
@@ -17,10 +17,10 @@ export function highlightHintWhite(i, j, updateHighlightHints, boardState, isKin
     }
     else if(isPieceExists['name'] == "king_w") {
         if(isKingRookMovedWhite) {
-            kingsHints(i, j, updateHighlightHints, boardState, "_w")
+            kingsHints(i, j, updateHighlightHints, boardState, "_w", updateCheckState)
         }
         else {
-            castleCheck(i, j, updateHighlightHints, boardState, "_w")
+            castleCheck(i, j, updateHighlightHints, boardState, "_w", updateCheckState)
         }
     }
     else if(isPieceExists['name'] == "bishop_w") {
@@ -36,7 +36,7 @@ export function highlightHintWhite(i, j, updateHighlightHints, boardState, isKin
 }
 
 
-export function highlightHintBlack(i, j, updateHighlightHints, boardState, isKingRookMovedBlack) {
+export function highlightHintBlack(i, j, updateHighlightHints, boardState, isKingRookMovedBlack, updateCheckState) {
     let isPieceExists = boardState[`${i} ${j}`]
     let selectedElement = isPieceExists
     if(isPieceExists['name'] == 'pawn_b'){
@@ -52,10 +52,10 @@ export function highlightHintBlack(i, j, updateHighlightHints, boardState, isKin
     }
     else if(isPieceExists['name'] == "king_b") {
         if(isKingRookMovedBlack) {
-            kingsHints(i, j, updateHighlightHints, boardState, "_b")
+            kingsHints(i, j, updateHighlightHints, boardState, "_b", updateCheckState)
         }
         else {
-            castleCheck(i, j, updateHighlightHints, boardState, "_b")
+            castleCheck(i, j, updateHighlightHints, boardState, "_b", updateCheckState)
         }
     }
     else if(isPieceExists['name'] == "bishop_b") {
@@ -72,7 +72,7 @@ export function highlightHintBlack(i, j, updateHighlightHints, boardState, isKin
 
 
 
-export function makeMove(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack, setPawnPromotionWhite, setPawnPromotionBlack) {
+export function makeMove(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack, setPawnPromotionWhite, setPawnPromotionBlack, updateKingWhiteNeighbours, updateKingBlackNeighbours) {
     updateHighlightHints({})
     console.log('selected element' ,selectedElement)
     // delete previous element
@@ -121,11 +121,110 @@ export function makeMove(i, j, updateboardState, selectedElement, updateHighligh
             'name': selectedElement.name
         }
     }))
+    // setting new nieghours for king
+    
+    let tiles = {
+        '0 0': true, '1 0': true, '2 0': true, '3 0': true, '4 0': true, '5 0': true, '6 0': true, '7 0': true,
+        '0 1': true, '1 1': true, '2 1': true, '3 1': true, '4 1': true, '5 1': true, '6 1': true, '7 1': true,
+        '0 2': true, '1 2': true, '2 2': true, '3 2': true, '4 2': true, '5 2': true, '6 2': true, '7 2': true,
+        '0 3': true, '1 3': true, '2 3': true, '3 3': true, '4 3': true, '5 3': true, '6 3': true, '7 3': true,
+        '0 4': true, '1 4': true, '2 4': true, '3 4': true, '4 4': true, '5 4': true, '6 4': true, '7 4': true,
+        '0 5': true, '1 5': true, '2 5': true, '3 5': true, '4 5': true, '5 5': true, '6 5': true, '7 5': true,
+        '0 6': true, '1 6': true, '2 6': true, '3 6': true, '4 6': true, '5 6': true, '6 6': true, '7 6': true,
+        '0 7': true, '1 7': true, '2 7': true, '3 7': true, '4 7': true, '5 7': true, '6 7': true, '7 7': true 
+    }
+    
+    
+    if(selectedElement.name=='king_w') {
+    console.log('asdf')
+
+        updateKingWhiteNeighbours((prevNeighbours) => {
+            let newNeigbours = []
+
+            
+
+            if(`${i+1} ${j}` in tiles) {
+                newNeigbours.push(`${i+1} ${j}`)
+            }
+            if(`${i-1} ${j}` in tiles) {
+                newNeigbours.push(`${i-1} ${j}`)
+            }
+
+            if(`${i+1} ${j+1}` in tiles) {
+                newNeigbours.push(`${i+1} ${j+1}`)
+            }
+            if(`${i} ${j+1}` in tiles) {
+                newNeigbours.push(`${i} ${j+1}`)
+            }
+            if(`${i-1} ${j+1}` in tiles) {
+                newNeigbours.push(`${i-1} ${j+1}`)
+            }
+
+            if(`${i+1} ${j-1}` in tiles) {
+                newNeigbours.push(`${i+1} ${j-1}`)
+            }
+            if(`${i} ${j-1}` in tiles) {
+                newNeigbours.push(`${i} ${j-1}`)
+            }
+            if(`${i-1} ${j-1}` in tiles) {
+                newNeigbours.push(`${i-1} ${j-1}`)
+            }
+            
+            console.log('king new neighbours are' , newNeigbours)
+
+            return newNeigbours
+        })       
+    }
+
+    if(selectedElement.name=='king_b') {
+    console.log('asdf')
+
+        updateKingBlackNeighbours((prevNeighbours) => {
+            let newNeigbours = []
+
+            
+
+            if(`${i+1} ${j}` in tiles) {
+                newNeigbours.push(`${i+1} ${j}`)
+            }
+            if(`${i-1} ${j}` in tiles) {
+                newNeigbours.push(`${i-1} ${j}`)
+            }
+
+            if(`${i+1} ${j+1}` in tiles) {
+                newNeigbours.push(`${i+1} ${j+1}`)
+            }
+            if(`${i} ${j+1}` in tiles) {
+                newNeigbours.push(`${i} ${j+1}`)
+            }
+            if(`${i-1} ${j+1}` in tiles) {
+                newNeigbours.push(`${i-1} ${j+1}`)
+            }
+
+            if(`${i+1} ${j-1}` in tiles) {
+                newNeigbours.push(`${i+1} ${j-1}`)
+            }
+            if(`${i} ${j-1}` in tiles) {
+                newNeigbours.push(`${i} ${j-1}`)
+            }
+            if(`${i-1} ${j-1}` in tiles) {
+                newNeigbours.push(`${i-1} ${j-1}`)
+            }
+            
+            console.log('king new neighbours are' , newNeigbours)
+            return newNeigbours
+        })       
+    }
+
+    // checking check?
+    // checkCheckWhite
+
+
     let swapTurn = (turn == "_w"?"_b":"_w")
     return swapTurn
 }
 
-export function makeMoveCastle(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack) {
+export function makeMoveCastle(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack, updateKingWhiteNeighbours, updateKingBlackNeighbours) {
     if(turn == '_w') {
         if(i==0) {
         console.log('long castle triggered')
@@ -228,15 +327,8 @@ else if(i==7) {
 
 
 
-export function checkCheckWhite(updateHighlightHints, boardState) {
-    let king_index = findPiece(boardState, 'king_w')
-    console.log('king white is at position ', king_index)
-    // checkPawnBlackHints(6, 6, updateHighlightHints, boardState);
-    // rooksHints(6, 6, updateHighlightHints, boardState, "_b");
-    // bishopsHints(5, 5, updateHighlightHints, boardState, "_w");
-    // queensHints(5, 5, updateHighlightHints, boardState, "_w");
-    // kingsHints(5, 5, updateHighlightHints, boardState, "_w");
-    return true
+export function checkCheckWhite(boardState, updateCheckState) {
+
 }
 
 

@@ -3,26 +3,30 @@ import {highlightHintWhite, highlightHintBlack} from './HighlightHintsData'
 import {makeMove, makeMoveCastle} from './HighlightHintsData'
 import {checkCheckWhite} from './HighlightHintsData'
 import { promotePawnWhite, promotePawnBlack} from "./SeperatePiecesHighlights";
+import { isKingWhiteCheck } from "./Mates";
+import { virtualTraversalWhite } from "./Mates";
 
 var selectedElement;
 var turn = "_w"
 
-export default function Tile({i, j, highlightHints, boardState, updateHighlightHints, updateboardState, setIsKingRookMovedWhite, setIsKingRookMovedBlack, isKingRookMovedWhite, isKingRookMovedBlack, setPawnPromotionWhite, setPawnPromotionBlack, pawnPromotionWhite, pawnPromotionBlack}) {
+export default function Tile({i, j, highlightHints, boardState, updateHighlightHints, updateboardState, setIsKingRookMovedWhite, setIsKingRookMovedBlack, isKingRookMovedWhite, isKingRookMovedBlack, setPawnPromotionWhite, setPawnPromotionBlack, pawnPromotionWhite, pawnPromotionBlack, updateCheckState, checkState, updateRemoveCheck, removeCheck, updateKingWhiteNeighbours, updateKingBlackNeighbours}) {
 
     function handleClick() {
         if(turn=="_w") {
+            // isKingWhiteCheck(boardState)
             // let isCheck = checkCheckWhite(updateHighlightHints, boardState)
             // if(!isCheck) {
-            isPieceExists && isPieceExists.name.endsWith('_w')?selectedElement = highlightHintWhite(i,j, updateHighlightHints, boardState, isKingRookMovedWhite):console.log('button without piece click')
+            isPieceExists && isPieceExists.name.endsWith('_w')?selectedElement = highlightHintWhite(i,j, updateHighlightHints, boardState, isKingRookMovedWhite, updateCheckState):console.log('button without piece click')
             // }
         }
         else if(turn=="_b") {
-            isPieceExists && isPieceExists.name.endsWith('_b')?selectedElement = highlightHintBlack(i,j, updateHighlightHints, boardState, isKingRookMovedBlack):console.log('button without piece click')    
+            virtualTraversalWhite(boardState, updateCheckState)
+            isPieceExists && isPieceExists.name.endsWith('_b')?selectedElement = highlightHintBlack(i,j, updateHighlightHints, boardState, isKingRookMovedBlack, updateCheckState):console.log('button without piece click')    
         }        
         console.log(isPieceExists)
         console.log(selectedElement)
-        ishighlightEffect == 'hint' || ishighlightEffect == 'danger'?turn=makeMove(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack, setPawnPromotionWhite, setPawnPromotionBlack):console.log('')
-        ishighlightEffect == 'advantage' ? turn=makeMoveCastle(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack): console.log('not castled')
+        ishighlightEffect == 'hint' || ishighlightEffect == 'danger'?turn=makeMove(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack, setPawnPromotionWhite, setPawnPromotionBlack, updateKingWhiteNeighbours, updateKingBlackNeighbours, updateCheckState):console.log('')
+        ishighlightEffect == 'advantage' ? turn=makeMoveCastle(i, j, updateboardState, selectedElement, updateHighlightHints, turn, setIsKingRookMovedWhite, setIsKingRookMovedBlack, updateKingWhiteNeighbours, updateKingBlackNeighbours): console.log('not castled')
     }
     
 
