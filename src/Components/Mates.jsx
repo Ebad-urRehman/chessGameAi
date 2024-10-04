@@ -1,7 +1,4 @@
 // THis file is for checking checkmates and stale mates
-
-import { rooksHints } from "./SeperatePiecesHighlights"
-
 export function findPosition(pieceName, boardState) {
     for(let key in boardState) {
         if(boardState[key].name === pieceName) {
@@ -24,7 +21,7 @@ export function virtualTraversalWhite(boardState, updateCheckState) {
             let i = boardState[piece].i
             let j = boardState[piece].j
 
-            if(pieceName == 'pawn_w' && boardState[`${i + 1} ${j+1}`]){
+            if(pieceName == 'pawn_w' && boardState[`${i+1} ${j+1}`]){
                 if(boardState[`${i + 1} ${j+1}`].name == 'king_b') {
                     
                     console.log('Black Checked from left Pawn')
@@ -39,7 +36,7 @@ export function virtualTraversalWhite(boardState, updateCheckState) {
                 }
             }
             if(pieceName == 'rook_w') {
-                rooksCheckCheckWhite(i, j, boardState, updateCheckState)
+                // rooksCheckCheckWhite(i, j, boardState, updateCheckState)
             }
             if(pieceName == 'knight_w') {
                 knightCheckCheckWhite(i, j, boardState, updateCheckState)

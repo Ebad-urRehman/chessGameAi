@@ -1,3 +1,4 @@
+import { generateAllMoves } from "./HandlePossibleMoves"
 import Tile, { TilePawnSelection } from "./Tile"
 import React from "react"
 
@@ -29,12 +30,15 @@ export default function Board() {
 
 
         '0 0': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 0, 'j': 0},
-        '1 0': {'url': './images/knight_w.png', 'name': 'knight_w', 'i': 1, 'j': 0},
-        '2 0': {'url': './images/bishop_w.png', 'name': 'bishop_w', 'i': 2, 'j': 0},
-        '3 0': {'url': './images/queen_w.png', 'name': 'queen_w', 'i': 3, 'j': 0},
+        // '1 0': {'url': './images/knight_w.png', 'name': 'knight_w', 'i': 1, 'j': 0},
+        // '2 0': {'url': './images/bishop_w.png', 'name': 'bishop_w', 'i': 2, 'j': 0},
+        '5 5': {'url': './images/bishop_w.png', 'name': 'bishop_w', 'i': 5, 'j': 5},
+        '4 4': {'url': './images/queen_w.png', 'name': 'queen_w', 'i': 4, 'j': 4},
+        // '3 0': {'url': './images/queen_w.png', 'name': 'queen_w', 'i': 3, 'j': 0},
         '4 0': {'url': './images/king_w.png', 'name': 'king_w', 'i': 4, 'j': 0},
         '5 0': {'url': './images/bishop_w.png', 'name': 'bishop_w', 'i': 5, 'j': 0},
         '6 0': {'url': './images/knight_w.png', 'name': 'knight_w', 'i': 6, 'j': 0},
+        '6 3': {'url': './images/knight_w.png', 'name': 'knight_w', 'i': 6, 'j': 3},
         '7 0': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 7, 'j': 0},
         
         '4 2': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 4, 'j': 2},
@@ -59,7 +63,7 @@ export default function Board() {
         '7 7': {'url': './images/rook_b.png', 'name': 'rook_b', 'i': 7, 'j': 7},
     }
     
-    const initialHighlightHints = {}
+    const initialHighlightHints = {'hint_moves': [], 'danger_moves': []}
 
     const [boardState, updateboardState] = React.useState(initialBoardState)
     const [highlightHints, updateHighlightHints] = React.useState(initialHighlightHints)
@@ -71,6 +75,9 @@ export default function Board() {
     const [removeCheck, updateRemoveCheck] = React.useState([])
     const [kingWhiteNeighbours, updateKingWhiteNeighbours] = React.useState(['3 0', '3 1', '4 1', '5 0', '5 1'])
     const [kingBlackNeighbours, updateKingBlackNeighbours] = React.useState(['3 7', '3 6', '4 6', '5 7', '5 6'])
+    const [possibleMovesWhite, updatePossibleMovesWhite] = React.useState({})
+    const [possibleMovesBlack, updatePossibleMovesBlack] = React.useState({})
+
 
     // danger board states
     // const []
@@ -78,6 +85,7 @@ export default function Board() {
     for(let j=verticalAxis.length - 1; j>=0; j--) {
         for(let i=0; i<horizontalAxis.length; i++) {
             tiles.push(<Tile i={i} j={j}
+                key={`${i}-${j}`}
                 highlightHints={highlightHints}
                 boardState={boardState}
                 updateHighlightHints={updateHighlightHints}
@@ -96,12 +104,17 @@ export default function Board() {
                 removeCheck={removeCheck}
                 updateKingBlackNeighbours={updateKingBlackNeighbours}
                 updateKingWhiteNeighbours={updateKingWhiteNeighbours}
+                possibleMovesWhite={possibleMovesWhite}
+                possibleMovesBlack={possibleMovesBlack}
+                updatePossibleMovesWhite={updatePossibleMovesWhite}
+                updatePossibleMovesBlack={updatePossibleMovesBlack}
                 />)
         }
 
     }
     console.log('tiles : ', tiles[0])
     
+
     return (
         <>
             <div className="board">
