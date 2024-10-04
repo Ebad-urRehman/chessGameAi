@@ -86,6 +86,11 @@ export default function Tile({
         }
 
         console.log(isPieceExists)
+        console.log(i, j, boardState)
+        updatePossibleMovesWhite((prev) => {
+            console.log(prev['4 2'])
+            return prev
+        })
         console.log(selectedElement)
 
         if (ishighlightEffect === 'hint' || ishighlightEffect === 'danger') {

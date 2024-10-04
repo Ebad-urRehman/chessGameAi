@@ -1,4 +1,3 @@
-import { generateAllMoves } from "./HandlePossibleMoves"
 import Tile, { TilePawnSelection } from "./Tile"
 import React from "react"
 
@@ -16,6 +15,7 @@ export default function Board() {
         '5 1': {'url': './images/pawn_w.png', 'name': 'pawn_w', 'i': 5, 'j': 1},
         '6 1': {'url': './images/pawn_w.png', 'name': 'pawn_w', 'i': 6, 'j': 1},
         '7 1': {'url': './images/pawn_w.png', 'name': 'pawn_w', 'i': 7, 'j': 1},
+        '5 4': {'url': './images/pawn_w.png', 'name': 'pawn_w', 'i': 5, 'j': 4},
         
         // tests
         // '1 2': {'url': './images/rook_w.png', 'name': 'rook_w', 'i': 1, 'j': 2},
@@ -33,8 +33,8 @@ export default function Board() {
         // '1 0': {'url': './images/knight_w.png', 'name': 'knight_w', 'i': 1, 'j': 0},
         // '2 0': {'url': './images/bishop_w.png', 'name': 'bishop_w', 'i': 2, 'j': 0},
         '5 5': {'url': './images/bishop_w.png', 'name': 'bishop_w', 'i': 5, 'j': 5},
-        '4 4': {'url': './images/queen_w.png', 'name': 'queen_w', 'i': 4, 'j': 4},
-        // '3 0': {'url': './images/queen_w.png', 'name': 'queen_w', 'i': 3, 'j': 0},
+        // '4 4': {'url': './images/queen_w.png', 'name': 'queen_w', 'i': 4, 'j': 4},
+        '3 0': {'url': './images/queen_w.png', 'name': 'queen_w', 'i': 3, 'j': 0},
         '4 0': {'url': './images/king_w.png', 'name': 'king_w', 'i': 4, 'j': 0},
         '5 0': {'url': './images/bishop_w.png', 'name': 'bishop_w', 'i': 5, 'j': 0},
         '6 0': {'url': './images/knight_w.png', 'name': 'knight_w', 'i': 6, 'j': 0},

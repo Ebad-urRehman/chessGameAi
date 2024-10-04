@@ -10,7 +10,7 @@ export function pawnWhitePossibleMoves(piece, boardState, updatePossibleMovesWhi
     if(!(boardState[`${i} ${j+1}`])) {
         hint_moves.push(`${i} ${j+1}`)
     }
-    if(!(boardState[`${i} ${j+2}`]) && !(boardState[`${i} ${j+1}`])) {
+    if(!(boardState[`${i} ${j+2}`]) && !(boardState[`${i} ${j+1}`]) && j==1) {
         hint_moves.push(`${i} ${j+2}`)
     }
     if(boardState[`${i+1} ${j+1}`] && boardState[`${i+1} ${j+1}`].name.endsWith('_b')) {
@@ -41,7 +41,7 @@ export function pawnBlackPossibleMoves(piece, boardState, updatePossibleMovesBla
     if(!(boardState[`${i} ${j-1}`])) {
         hint_moves.push(`${i} ${j-1}`)
     }
-    if(!(boardState[`${i} ${j-2}`]) && !(boardState[`${i} ${j-1}`])) {
+    if(!(boardState[`${i} ${j-2}`]) && !(boardState[`${i} ${j-1}`]) && j==6) {
         hint_moves.push(`${i} ${j-2}`)
     }
     if(boardState[`${i+1} ${j-1}`] && boardState[`${i+1} ${j-1}`].name.endsWith('_w')) {
@@ -413,9 +413,18 @@ export function kingPossibleMoves(piece, boardState, updatePossibleMovesWhite, u
     chooseHint(boardState, i+1, j, turn) == 'danger' ? danger_moves.push(`${i+1} ${j}`): null
 
     chooseHint(boardState, i+1, j-1, turn) == 'danger' ? danger_moves.push(`${i+1} ${j-1}`): null
-    chooseHint(boardState, i, j-1, turn) == 'danger'? danger_moves.push(`${i} ${j+1}`): null
+    chooseHint(boardState, i, j-1, turn) == 'danger'? danger_moves.push(`${i} ${j-1}`): null
     chooseHint(boardState, i-1, j-1, turn) == 'danger' ? danger_moves.push(`${i-1} ${j-1}`): null
     
+    // console.log(chooseHint(boardState, i+1, j+1, turn) == 'hint')
+    // console.log(chooseHint(boardState, i, j+1, turn) == 'hint')
+    // console.log(chooseHint(boardState, i-1, j+1, turn) == 'hint')
+    // console.log(chooseHint(boardState, i-1, j, turn) == 'hint')
+    // console.log(chooseHint(boardState, i+1, j, turn) == 'hint')
+    // console.log(chooseHint(boardState, i+1, j-1, turn) == 'hint')
+    // console.log(chooseHint(boardState, i, j-1, turn) == 'hint')
+    // console.log(chooseHint(boardState, i-1, j-1, turn) == 'hint')
+
 
     if(turn == '_w') {
         updatePossibleMovesWhite((prevMovesWhite) => {

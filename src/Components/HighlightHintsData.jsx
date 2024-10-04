@@ -5,6 +5,16 @@ export function makeMove(i, j, updateboardState, selectedElement, updateHighligh
     updateboardState((prevBoardState) => {
         let newBoardState = {}
 
+        updateboardState((prevBoardState) => ({
+            ...prevBoardState,
+            [`${i} ${j}`]: {
+                'i':i,
+                'j':j,
+                'url': selectedElement.url,
+                'name': selectedElement.name
+            }
+        }))
+
         for(let key in prevBoardState) {
             if(prevBoardState[key] !== selectedElement) {
                 newBoardState[key] = prevBoardState[key]
@@ -39,14 +49,7 @@ export function makeMove(i, j, updateboardState, selectedElement, updateHighligh
         return newBoardState
     })
     
-    updateboardState((prevBoardState) => ({
-        ...prevBoardState,
-        [`${i} ${j}`]: {
-            ...prevBoardState[`${i} ${j}`],
-            'url': selectedElement.url,
-            'name': selectedElement.name
-        }
-    }))
+    
     // setting new nieghours for king
     
     let tiles = {
